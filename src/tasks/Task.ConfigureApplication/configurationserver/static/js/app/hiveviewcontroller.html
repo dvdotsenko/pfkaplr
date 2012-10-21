@@ -1,0 +1,56 @@
+<script id="hiveview_wrapper_template" type="text/x-mustache">
+<style>
+.toptab_parent {
+    height: 2em;
+    margin-bottom: -2em;
+}
+.bottomtab_parent {
+    height: 2em;
+    margin-top: -2em;
+}
+
+.tab {
+    /* padding-top: 0.5em;
+    padding-bottom: 0.5em; */
+    padding-left: 2em;
+    padding-right: 2em;
+    font-weight: bold;
+    color: white;
+    background-color: #797979;
+    height: 2em;
+	line-height:2em; /* see "Method 2" here: http://phrogz.net/css/vertical-align/index.html*/
+}
+
+.toptab {
+    border-bottom-right-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+}
+
+.bottomtab {
+    border-top-right-radius: 0.5em;
+    border-top-left-radius: 0.5em;
+}
+</style>
+<div id="taskhive_new"></div>
+<div id="taskhives"></div>
+</script>
+
+<script id="hiveview_hive_template" type="text/x-mustache">
+<div id="{{id}}" class="taskhive_viewer">
+<!--div class="shrinkwidth_parent toptab_parent"><span><div class="shrinkwidth_subject tab toptab"><span style="vertical-align: middle;">controls</span>
+</div></span></div-->
+<div class="taskhive_canvas" style="width:100%;height:100%;"></div>
+<div class="shrinkwidth_parent bottomtab_parent"><span><div class="shrinkwidth_subject tab bottomtab">
+<span style="vertical-align: middle;">'<span contenteditable="true" name="label">{{label}}</span>'<span class="button delete" style="display:none;margin-left:1em;vertical-align: text-bottom;"></span></span>
+</div></span></div>
+</div>
+</script>
+
+<script id="hiveview_newhivecontrols_template" type="text/x-mustache">
+<table style="width:100%;height:100%"><tr style="width:100%;height:100%"><td style="width:100%;height:100%">
+<div class="shrinkwidth_parent"><span><div class="shrinkwidth_subject">
+<button class="add">Add task hive</button>
+<!-- button class="import">Import task hive</button -->
+</div></span></div>
+</td></tr></table>
+</script>

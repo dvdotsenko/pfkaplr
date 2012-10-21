@@ -1,0 +1,101 @@
+.detailsview_wrapper {
+	position:absolute;
+	top:auto;
+	left:0;
+}
+
+.detailsview_controls {
+	cursor: pointer;
+	position: absolute;
+	top: auto;
+	left: 0;
+}
+
+.recessed-left {
+	left:-30px;
+}
+
+.detailsview_tiles {
+	height:auto;
+	/*max-width: 18em;*/
+	/*padding: 1em;*/
+	padding-right: 20px;
+	/*margin-top: 40px;*/
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.detailsview_tile {
+	/*cursor:pointer;*/
+	min-height: 3em;
+	min-width: 14em;
+	margin-right: 5px;
+/*	padding: 0.25em;
+	margin:5px;*/
+}
+.detailsview_logo {
+	/*cursor: move;*/
+	float: right;
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+	margin:0.25em;
+}
+.detailsview_logo img {
+	width: 100%;
+	height: 100%;
+}
+.detailsview_label {
+	display: block;
+	font-weight: bold;
+}
+.detailsview_description {
+	display: inline;
+}
+
+.detailsview_argument_type {
+	color:gray;
+	font-style: italic;	
+}
+
+.detailsview_argument_name {
+	font-weight: bold;
+}
+
+.hovertip {
+	display: none;
+	position: absolute;
+	background-color: white;
+	border: solid gray 1px;
+}
+
+.hovertip_trigger:hover > .hovertip {
+	display: block;
+}
+
+#detailsview_tiles_controls {
+	display: relative;
+	min-height: 5em;
+}
+
+#detailsview_tiles_controls .button{
+	position:absolute;
+	cursor: pointer;
+
+	border: solid gray 1px;
+	background-color: rgba(255,255,255,128);
+	padding-left:0.25em;
+	padding-right:0.3em;
+
+	box-shadow: 3px 3px 7px gray;
+	border-radius: 0.25em;
+
+    -webkit-transform: rotate(40deg);
+    -webkit-transform-origin: 0 100%;
+
+    -o-transform: rotate(40deg);
+    -o-transform-origin: 0 100%;
+
+    transform: rotate(40deg);
+    transform-origin: 0 100%;
+}

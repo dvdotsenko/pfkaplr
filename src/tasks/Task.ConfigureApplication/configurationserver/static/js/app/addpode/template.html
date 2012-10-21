@@ -1,0 +1,25 @@
+<script id="addpode_wrapper_template" type="text/template">
+<div class="addpode_wrap">
+<!-- controls -->
+<div id="addpode_controls" class="addpode_controls">
+<img src="img/add_button_right.svg" height="128px" width="64px" />
+</div>
+<!-- the list -->
+<div id="addpode_tiles" class="addpode_tiles" style="display:none">(loading ...)</div>
+</div>
+</script>
+<script id="addpode_tile_template" type="text/template">
+{{#tasktypes}}
+<div class="addpode_tile ui-panel clearfix" data-tasktypeid="{{tasktype}}">
+<div class="addpode_logo_wrap">
+<div class="addpode_logo">
+<img src="img/ball_back.svg" />
+<img 
+	style="top:15%;left:15%;width:70%;height:70%" 
+	src="img/logos/{{id}}.svg" />
+</div></div>
+<div class="addpode_label">{{label}}</div>
+<div class="addpode_description">{{description}}</div>
+</div>
+{{/tasktypes}}
+</script>

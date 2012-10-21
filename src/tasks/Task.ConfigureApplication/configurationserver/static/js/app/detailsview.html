@@ -1,0 +1,66 @@
+<script id="detailsview_wrapper_template" type="text/template">
+<div class="detailsview_wrapper">
+<!-- controls -->
+<div id="detailsview_controls" class="detailsview_controls">
+<img src="img/details_button.svg" height="128px" width="64px" />
+</div>
+<!-- the list -->
+<div id="detailsview_tiles" class="detailsview_tiles" style="display:none">(nothing to display)</div>
+</div>
+</script>
+
+<script id="detailsview_argument_template" type="text/template">
+<div style="margin-top:0.5em;margin-bottom:0.5em;" class="clearfix" data-argumentid="{{id}}">
+<div>
+<span class="detailsview_argument_type">{{type}}</span>
+<span class="detailsview_argument_name">{{name}}</span>
+<span class="hovertip_trigger"><span class="ui-icon ui-icon-info" style="display: inline-block;"></span><span class="hovertip">{{description}}</span></span>
+</div>
+<div><input style="width:100%" name="value" type="text" value="" /></div>
+</div>
+</script>
+
+<script id="detailsview_focused_tile_template" type="text/template">
+<div class="detailsview_tile ui-panel clearfix" data-taskinstanceid="{{taskinstanceid}}">
+<div class="detailsview_logo">
+<img 
+	style="top:15%;left:15%;width:70%;height:70%" 
+	src="img/logos/{{tasktype}}.svg" />
+</div>
+<div class="detailsview_tile_controls">
+<div class="detailsview_label clearfix">{{label}}</div>
+<label><input type="checkbox" name="paused"/><span style="margin-left:0.5em;">Paused</span></label>
+{{#runonce}}
+<span style="margin-left:0.5em;margin-right:0.5em;">|</span>
+<input type="button" value="Run once" />
+{{/runonce}}
+</div>
+<div class="detailsview_arguments"></div>
+</div>
+</script>
+
+<script id="detailsview_tiles_template" type="text/template">
+<div id="detailsview_tiles_controls" class="clearfix">
+<div class="button delete" style="left: 1em;">
+<span class="ui-icon ui-icon-trash" style="display: inline-block;"></span>delete
+</div>
+<div class="button connect" style="left: 4em;">
+<span class="ui-icon ui-icon-link" style="display: inline-block;"></span>connect
+</div>
+<div class="button disconnect" style="left: 7em;">
+<span class="ui-icon ui-icon-scissors" style="display: inline-block;"></span>disconnect
+</div>
+</div>
+<div id="detailsview_focused_tile"></div>
+{{#tasks}}
+<div class="detailsview_tile ui-panel clearfix" data-taskinstanceid="{{taskinstanceid}}">
+<div class="detailsview_logo">
+<img 
+	style="top:15%;left:15%;width:70%;height:70%" 
+	src="img/logos/{{tasktype}}.svg" />
+</div>
+<div class="detailsview_label">{{label}}</div>
+<!-- <div class="detailsview_description">{{description}}</div> -->
+</div>
+{{/tasks}}
+</script>

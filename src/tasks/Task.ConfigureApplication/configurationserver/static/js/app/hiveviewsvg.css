@@ -1,0 +1,59 @@
+.position_marker {
+  fill: #F5F6D4;
+}
+
+.start > .position_marker {
+  /*fill: #A8D46F; i like */ 
+  fill: #CDE855;
+}
+
+.end > .position_marker {
+  fill: #EFADB9;
+}
+
+.paused > .position_marker {
+  fill: #4f3f3b;
+}
+
+.cursor {
+  fill: none;
+  stroke: brown;
+  pointer-events: none;
+}
+
+.link {
+  stroke: #00f;
+}
+
+.highlight .decor{
+  stroke: #b6ebae;
+}
+
+.marker {
+  fill: #E2C410;
+  stroke: #B89F0D;
+}
+
+.showonhover {
+  display:none;
+}
+
+.node:hover .showonhover {
+  display:block;
+}
+
+.nodelabel {
+  font-size: 1.2em;
+  font-weight: bold;
+  font-family: Helvetica, Arial, sans-serif;
+  text-shadow:
+    -2px -2px 0 #eee,
+    2px -2px 0 #eee,
+    -2px 2px 0 #eee,
+    2px 2px 0 #eee;
+}
+
+.tentacle {
+  fill: gray;
+  stroke:gray;
+}
