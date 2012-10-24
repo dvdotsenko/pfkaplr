@@ -5,7 +5,7 @@ import os
 import platform
 import re
 
-from . import APP_NAME
+from .appname import APP_NAME
 
 MODE = platform.system()
 
@@ -61,6 +61,9 @@ def test():
 	)
 
 	print get_app_data_folder()
+
+if not os.path.isdir( get_app_data_folder() ):
+	os.mkdir( get_app_data_folder() )
 
 if __name__ == "__main__":
 	test()

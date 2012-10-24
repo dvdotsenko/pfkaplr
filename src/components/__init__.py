@@ -5,5 +5,4 @@ from __future__ import absolute_import, division, with_statement
 # reimporting them gets you same instance.
 
 from .storage_instantiator import storage_singleton as storage
-
-APP_NAME = 'PFKAPLR'
+from .appname import APP_NAME

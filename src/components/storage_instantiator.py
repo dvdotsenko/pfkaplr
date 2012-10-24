@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, with_statement
-# import systemtools
+
 import os
 import json
 import weakref
@@ -9,6 +9,7 @@ import logging
 import re
 
 from components import events
+from components import systemtools
 
 HELLO = "Storage.py: "
 
@@ -17,25 +18,18 @@ null = None
 false = False
 true = True
 STARTING_VALUES = {
- "Task.Core.ConfigurationWebInterface_13495994978170.27492985455319285": {
-  "inputs": [
-   [
-    null, 
-    "Callback", 
-    "callback", 
-    "Function to be called (or passed to async delegate) when done"
-   ]
+ "TaskHive.Default": {
+  "description": "We start services that are relied upon by all task groups. For project-specific task group, make another Task Hive and put your project tasks in there..", 
+  "tasks": [
+   "Task.Core.ConfigurationWebInterface_default", 
+   "Task.Core.SystemTrayControls_default", 
+   "Task.LiveReload.LiveReloadServer_default"
   ], 
-  "description": "Manage all aspects of hrough a graphical user interface.", 
-  "consumers": [], 
-  "outputs": [], 
-  "label": "Configure", 
-  "paused": false, 
-  "tasktype": "Core.ConfigurationWebInterface", 
-  "type": "Task", 
-  "id": "Task.Core.ConfigurationWebInterface_13495994978170.27492985455319285"
+  "type": "TaskHive", 
+  "id": "TaskHive.Default", 
+  "label": "Global Tasks"
  }, 
- "Task.Core.SystemTrayControls_13495995043540.15345499734394252": {
+ "Task.Core.SystemTrayControls_default": {
   "inputs": [
    [
     null, 
@@ -51,17 +45,43 @@ STARTING_VALUES = {
   "paused": false, 
   "tasktype": "Core.SystemTrayControls", 
   "type": "Task", 
-  "id": "Task.Core.SystemTrayControls_13495995043540.15345499734394252"
- },
- "TaskHive.Default": {
-  "id": "TaskHive.Default", 
-  "tasks": [
-    "Task.Core.ConfigurationWebInterface_13495994978170.27492985455319285",
-    "Task.Core.SystemTrayControls_13495995043540.15345499734394252"
-  ] , 
-  "type": "TaskHive", 
-  "description": "We start services that are relied upon by all task groups. For project-specific task group, make another Task Hive and put your project tasks in there..", 
-  "label": "Global Tasks"
+  "id": "Task.Core.SystemTrayControls_default"
+ }, 
+ "Task.LiveReload.LiveReloadServer_default": {
+  "inputs": [
+   [
+    null, 
+    "Callback", 
+    "callback", 
+    "Function to be called (or passed to async delegate) when done"
+   ]
+  ], 
+  "description": "Starts a (LiveReload type) server that allows browsers to connect and listen for change notifications.", 
+  "consumers": [], 
+  "outputs": [], 
+  "label": "LiveReload Server", 
+  "paused": false, 
+  "tasktype": "LiveReload.LiveReloadServer", 
+  "type": "Task", 
+  "id": "Task.LiveReload.LiveReloadServer_default"
+ }, 
+ "Task.Core.ConfigurationWebInterface_default": {
+  "inputs": [
+   [
+    null, 
+    "Callback", 
+    "callback", 
+    "Function to be called (or passed to async delegate) when done"
+   ]
+  ], 
+  "description": "Manage all aspects of hrough a graphical user interface.", 
+  "consumers": [], 
+  "outputs": [], 
+  "label": "Configure", 
+  "paused": false, 
+  "tasktype": "Core.ConfigurationWebInterface", 
+  "type": "Task", 
+  "id": "Task.Core.ConfigurationWebInterface_default"
  }
 }
 
@@ -88,7 +108,7 @@ def deep_update(target, update):
 class StorageBackend_File(object):
 
 	def __init__(self):
-		self.file = os.path.join( os.getcwd(), 'database.json' )
+		self.file = os.path.join( systemtools.get_app_data_folder() , 'settings.json' )
 		self.file_lock = threading.Lock()
 		self.all = STARTING_VALUES
 		self.all_lock = threading.Lock()
@@ -185,11 +205,11 @@ class Storage(object):
 
 		# emit signal to listeners that certain object changed.
 		change = self.subscribers['set']
-		logging.debug(HELLO + "set for name '%s' filters: %s" % (name, change.keys()) )
+		#logging.debug(HELLO + "set for name '%s' filters: %s" % (name, change.keys()) )
 		for filterdef in change.keys():
 			if re.search(filterdef, name):
 				filterlisteners = change.get(filterdef)
-				logging.debug(HELLO + "set listeners: %s" % filterlisteners)
+				#logging.debug(HELLO + "set listeners: %s" % filterlisteners)
 				# weakref callbacks went poof, but filter is around.
 				# cleaning up.
 				if not filterlisteners:
@@ -206,7 +226,7 @@ class Storage(object):
 			return value
 
 	def query(self, query_string, callback = None, **flags):
-		logging.debug(HELLO + " query string is '%s'" % query_string)
+		#logging.debug(HELLO + " query string is '%s'" % query_string)
 		values = self.storagebackend.get_values(
 			self.storagebackend.query_keys(query_string)
 		)
@@ -216,6 +236,8 @@ class Storage(object):
 			return values
 
 	def change(self, name, changes, callback = None):
+		if type(changes) != list:
+			changes = [changes]
 		changed = []
 		obj = self.storagebackend.get_value(name)
 		lock = self._change_lock[name] = self._change_lock.get(name) or threading.Lock()
@@ -237,17 +259,17 @@ class Storage(object):
 			# emit signal to listeners that certain object changed.
 			change = self.subscribers['change']
 			for filterdef in change.keys():
-				logging.debug(HELLO + "change for name '%s'. Comparing to filter: %s" % (name, filterdef) )
+				#logging.debug(HELLO + "change for name '%s'. Comparing to filter: %s" % (name, filterdef) )
 				if re.search(filterdef, name):
 					filterlisteners = change.get(filterdef)
-					logging.debug(HELLO + "change listeners len: %s, list: %s" % ( len(filterlisteners), filterlisteners) )
-					logging.debug(HELLO + "change is %s" % changed)
+					#logging.debug(HELLO + "change listeners len: %s, list: %s" % ( len(filterlisteners), filterlisteners) )
+					#logging.debug(HELLO + "change is %s" % changed)
 					# weakref callbacks went poof, but filter is around.
 					# cleaning up.
 					if filterlisteners:
 						for callback in filterlisteners:
 							callback(name, obj, changed)
-							logging.debug(HELLO + "fired change callback for %s" % name)
+							#logging.debug(HELLO + "fired change callback for %s" % name)
 
 	def _data_events_subscribe(self, eventtype, filterdef, callback):
 		'''Similar to jQuery's "live" or "delegate" event subscriptions.
