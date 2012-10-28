@@ -108,6 +108,7 @@ function EnvInit(events, globaldata){
 						, 'model': argumentmodel
 					})
 				})
+				arguments_parent.find('textarea').elastic()
 			}			
 		})
 
