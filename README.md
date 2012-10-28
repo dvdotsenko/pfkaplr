@@ -1,5 +1,7 @@
 Personal Workflow Automation Server
 
+See [project homepage for introduction](http://dvdotsenko.github.com/pfkaplr/)
+
 A friendly, intuitive, pretty graphical interface for managing and running tasks common to development workflows:
 
 - Watch folder, 
